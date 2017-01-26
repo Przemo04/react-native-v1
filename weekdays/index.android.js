@@ -21,33 +21,30 @@ var Category = require('./app/Category');
 
 export default class weekdays extends Component {
 
+	renderScene(route, navigator){
+			_navigator = navigator;
+				if(route.id === 'Main'){
+					return(<Main navigator={navigator} title="Main"/>);
+				}
+				if(route.id === 'Category'){
+					return(<Category navigator={navigator} title="Category"/>);
+				}
+				else{
+					return(<Book comic={route.comic} navigator={navigator} title="Book" />);
+				}
+	}
   render() {
 
     return (
 			<Navigator
-				initialRoute = {{
-					name: 'Category'
-				}}
-				renderScene = {
-					this.navigatorRenderScene
-				}
+				initialRoute = {{id: 'Category'}}
+				renderScene = {this.renderScene}
+				configureScreen ={(route, routeStack) => Navigator.SceneConfigs.FloatFromBottom }
 				/>
 
     );
   }
-	navigatorRenderScene(route, navigator){
-			_navigator = navigator;
-				if(route.name === 'Main'){
-					return(<Main navigator={navigator} title="Main"/>);
-				}
-				if(route.name === 'Category'){
-					return(<Category navigator={navigator} title="Category"/>);
-				}
-				else{
-					return(<Book navigator={navigator} title="Book" />);
-				}
 
-	}
 
 }
 

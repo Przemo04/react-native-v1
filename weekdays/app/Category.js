@@ -12,23 +12,21 @@ import {
 } from 'react-native';
 
 import {
-  Button
+  Button,
+	Icon
 } from 'react-native-elements';
 
-import { Icon } from 'react-native-elements';
+import api from '../utilties/api.js';
 
 const onButtonPress = () => {
-  Alert.alert('Alert dziala ? ');
+  Alert.alert('Będzie pokazywalo polecane');
 };
-
-import api from '../utilties/api.js';
 
 class Category extends Component {
 
 	constructor(props){
 		super(props);
 		this.state = {
-
 			dataSource: new ListView.DataSource({
 				rowHasChanged: (row1, row2) => row1 !== row2
 			}),
@@ -66,7 +64,7 @@ class Category extends Component {
 
 					<TouchableHighlight style={styles.button} onPress={() => {
 							this.props.navigator.push({
-								name: 'Main'
+								id: 'Main'
 							});
 							this.props.navigator.pop();
 						}}>
@@ -76,7 +74,7 @@ class Category extends Component {
 
 					<TouchableHighlight style={styles.button2} onPress={() => {
 							this.props.navigator.push({
-								name: 'Main'
+								id: 'Main'
 							});
 							this.props.navigator.pop();
 						}}>
@@ -85,7 +83,7 @@ class Category extends Component {
 
 					<TouchableHighlight style={styles.button3} onPress={() => {
 							this.props.navigator.push({
-								name: 'Main'
+								id: 'Main'
 							});
 							this.props.navigator.pop();
 						}}>

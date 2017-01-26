@@ -55,6 +55,13 @@ class Main extends Component {
 		});
 	}
 
+	onPress(comic){
+		this.props.navigator.push({
+			id: 'Book',
+			comic: comic
+		});
+	}
+
 	renderComic(comic){
 		var opisSlice = comic.opis.slice(0, 90)
 		return(
@@ -67,12 +74,17 @@ class Main extends Component {
 				<Text style={{marginBottom: 10}}>
 					{opisSlice + '...'}
 				</Text>
+
+
+
 				<Button
-					icon={{name: 'code'}}
-					backgroundColor='#03A9F4'
+					icon={{name: 'input'}}
+					backgroundColor='#D84727'
 					fontFamily='Lato'
 					buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-					title='VIEW NOW' />
+					title='Zobacz szczegoly'
+					onPress={() => {this.onPress(comic)}}
+					 />
 			</Card>
 
 			</View>
@@ -83,23 +95,18 @@ class Main extends Component {
 
     return (
       	<View style={styles.container}>
-
-
-					<TouchableHighlight onPress={() => {
-	            this.props.navigator.push({
-								name: 'Book'
-							});
+				<Button
+					icon={{name: 'arrow-back'}}
+					backgroundColor='#4A6C6F'
+					fontFamily='Lato'
+					title='Cofnij'
+					onPress={() => {
 							this.props.navigator.pop();
-
-	        }}>
-
-					<Text style={styles.testButton}>Trstt</Text>
-					</TouchableHighlight>
-				<ListView
-					dataSource={this.state.dataSource}
-					renderRow={this.renderComic.bind(this)}
-				/>
-
+						}} />
+					<ListView
+						dataSource={this.state.dataSource}
+						renderRow={this.renderComic.bind(this)}
+					/>
       </View>
     );
   }
@@ -108,8 +115,6 @@ class Main extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
