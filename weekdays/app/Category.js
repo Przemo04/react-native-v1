@@ -3,7 +3,6 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-	Button,
 	ListView,
 	Alert,
 	Image,
@@ -12,6 +11,11 @@ import {
   View
 } from 'react-native';
 
+import {
+  Button
+} from 'react-native-elements';
+
+import { Icon } from 'react-native-elements';
 
 const onButtonPress = () => {
   Alert.alert('Alert dziala ? ');
@@ -24,11 +28,7 @@ class Category extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			photos: [],
-			roverName: '',
-			// dataSource: new ListView.DataSource({
-			// 	rowHasChanged: (r1, r2) => r1 !== r2
-			// }),
+
 			dataSource: new ListView.DataSource({
 				rowHasChanged: (row1, row2) => row1 !== row2
 			}),
@@ -38,11 +38,7 @@ class Category extends Component {
 	componentWillMount(){
 		api.getRovers().then((res)=> {
 			this.setState({
-				//dataSource: this.state.dataSource.cloneWithRows(res.kategorie)
 				dataSource: this.state.kategorie
-				//busStops: locations.getIn(['data', 'busStops'], Map({})),
-				// photos: res.photos,
-				// roverName: res.photos[0].sol
 			})
 		});
 	}
@@ -58,14 +54,24 @@ class Category extends Component {
 
     return (
       <View style={styles.container}>
-				<Text style={styles.largeText}>Duzy tekst</Text>
+
+
+			<Button
+			  large
+				backgroundColor='#69970C'
+			  icon={{name: 'video-camera', type: 'font-awesome'}}
+			  title='Zobacz polecane filmy' />
+
+				<Text style={styles.largeText}>Wybierz kategorię</Text>
+
 					<TouchableHighlight style={styles.button} onPress={() => {
 							this.props.navigator.push({
 								name: 'Main'
 							});
 							this.props.navigator.pop();
 						}}>
-						<Text style={styles.buttonText}>Zobacz filmy dostepne w tej kategorii</Text>
+						<Text style={styles.buttonText}>Bajki</Text>
+
 					</TouchableHighlight>
 
 					<TouchableHighlight style={styles.button2} onPress={() => {
@@ -74,7 +80,16 @@ class Category extends Component {
 							});
 							this.props.navigator.pop();
 						}}>
-						<Text style={styles.buttonText}>Zobacz filmy dostepne w tej kategorii</Text>
+						<Text style={styles.buttonText}>Fantastyka</Text>
+					</TouchableHighlight>
+
+					<TouchableHighlight style={styles.button3} onPress={() => {
+							this.props.navigator.push({
+								name: 'Main'
+							});
+							this.props.navigator.pop();
+						}}>
+						<Text style={styles.buttonText}>Dramat</Text>
 					</TouchableHighlight>
 
       </View>
@@ -88,12 +103,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#dddfd4',
+    backgroundColor: '#96E1F6',
+		paddingTop: 20,
   },
 	largeText: {
 		flex: 1,
-		fontSize: 52,
-		paddingTop: 10,
+		fontSize: 38,
+		paddingTop: 40,
 		paddingLeft: 20,
 		paddingRight: 20,
 		color: '#173e43'
@@ -103,17 +119,25 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		alignSelf: 'stretch',
-		backgroundColor: '#3fb0ac'
+		backgroundColor: '#E4F5A3'
 	},
 	button2: {
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
 		alignSelf: 'stretch',
-		backgroundColor: '#3fbacc'
+		backgroundColor: '#6E92A1'
+	},
+	button3: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignSelf: 'stretch',
+		backgroundColor: '#D4B96A'
 	},
 	buttonText: {
-		fontSize: 18,
+		fontSize: 28,
+		color: '#011A1A'
 	}
 });
 

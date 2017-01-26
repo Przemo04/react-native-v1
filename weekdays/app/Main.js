@@ -3,7 +3,6 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-	Button,
 	ListView,
 	Alert,
 	Image,
@@ -11,7 +10,7 @@ import {
 	TouchableHighlight,
   View
 } from 'react-native';
-
+import { Card, ListItem, Button } from 'react-native-elements';
 import api from '../utilties/api.js';
 
 //var Book = require('./Book');
@@ -49,24 +48,33 @@ class Main extends Component {
 	}
 
 	componentWillMount(){
-		api.getRovers().then((res)=> {
+		api.getRovers().then((response)=> {
 			this.setState({
-				dataSource: this.state.dataSource.cloneWithRows(res.kategorie.bajki)
-				// photos: res.photos,
-				// roverName: res.photos[0].sol
+				dataSource: this.state.dataSource.cloneWithRows(response.kategorie.bajki)
 			})
 		});
 	}
 
 	renderComic(comic){
+		var opisSlice = comic.opis.slice(0, 90)
 		return(
 			<View>
+			<Card
+				title={comic.tytul}
+				titleStyle={{fontSize: 24, justifyContent: 'center'}}
+				image={{uri: `http://kamilaplug.pl/aplikacjamobilna/`+ comic.okladka}}
+				>
+				<Text style={{marginBottom: 10}}>
+					{opisSlice + '...'}
+				</Text>
+				<Button
+					icon={{name: 'code'}}
+					backgroundColor='#03A9F4'
+					fontFamily='Lato'
+					buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+					title='VIEW NOW' />
+			</Card>
 
-				<Text>{comic.id}</Text>
-				<Image
-					style={{width: 300, height: 250}}
-					source={{uri: `http://kamilaplug.pl/aplikacjamobilna/`+ comic.okladka}}
-				/>
 			</View>
 		)
 	}
@@ -75,6 +83,8 @@ class Main extends Component {
 
     return (
       	<View style={styles.container}>
+
+
 					<TouchableHighlight onPress={() => {
 	            this.props.navigator.push({
 								name: 'Book'
