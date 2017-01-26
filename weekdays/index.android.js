@@ -9,82 +9,46 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-	Button,
-	ListView,
-	Alert,
-	Image,
-  View
+  View,
+	Navigator
 } from 'react-native';
 
-import api from './utilties/api.js';
-
-const onButtonPress = () => {
-  Alert.alert('Button has been pressed!');
-};
+var Main = require('./app/Main');
+// var Book = require('./app/Book');
+//import Book from './app/Book';
+var Book = require('./app/Book');
+var Category = require('./app/Category');
 
 export default class weekdays extends Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			photos: [],
-			roverName: '',
-			// dataSource: new ListView.DataSource({
-			// 	rowHasChanged: (r1, r2) => r1 !== r2
-			// }),
-			dataSource: new ListView.DataSource({
-				rowHasChanged: (row1, row2) => row1 !== row2
-			}),
-		}
-	}
-
-	componentWillMount(){
-		api.getRovers().then((res)=> {
-			this.setState({
-				dataSource: this.state.dataSource.cloneWithRows(res.photos)
-				// photos: res.photos,
-				// roverName: res.photos[0].sol
-			})
-		});
-	}
-
-	renderComic(comic){
-		return(
-			<View>
-				<Text>{comic.id}</Text>
-				<Image source={{uri:comic.img_src}} style={{width: 293, height: 110}}/>
-				<Text>{comic.sol}</Text>
-
-			</View>
-		)
-	}
 
   render() {
 
     return (
-      <View style={styles.container}>
-				<Button
-				  onPress={onButtonPress}
-				  title="Learn More"
-				  color="#841584"
-				  accessibilityLabel="Learn more about this purple button"
+			<Navigator
+				initialRoute = {{
+					name: 'Category'
+				}}
+				renderScene = {
+					this.navigatorRenderScene
+				}
 				/>
-				<ListView
-					dataSource={this.state.dataSource}
-					renderRow={this.renderComic.bind(this)}
-				/>
-        <Text style={styles.welcome}>
-          Welcome to Reactttt!:
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
+
     );
   }
+	navigatorRenderScene(route, navigator){
+			_navigator = navigator;
+				if(route.name === 'Main'){
+					return(<Main navigator={navigator} title="Main"/>);
+				}
+				if(route.name === 'Category'){
+					return(<Category navigator={navigator} title="Category"/>);
+				}
+				else{
+					return(<Book navigator={navigator} title="Book" />);
+				}
+
+	}
+
 }
 
 const styles = StyleSheet.create({
@@ -99,11 +63,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+
 });
 
 AppRegistry.registerComponent('weekdays', () => weekdays);
